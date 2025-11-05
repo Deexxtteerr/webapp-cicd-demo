@@ -46,6 +46,7 @@ provider "aws" {
      key          = "index.html"
      source       = "../src/index.html"
      content_type = "text/html"
+     etag         = filemd5("../src/index.html")
      depends_on   = [aws_s3_bucket_website_configuration.webapp]
    }
 
