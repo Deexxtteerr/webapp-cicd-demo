@@ -17,6 +17,7 @@ provider "aws" {
 
    resource "aws_s3_bucket_policy" "webapp" {
      bucket = aws_s3_bucket.webapp.id
+     depends_on = [aws_s3_bucket_public_access_block.webapp]
      
      policy = jsonencode({
        Version = "2012-10-17"
@@ -33,6 +34,7 @@ provider "aws" {
 
    resource "aws_s3_bucket_website_configuration" "webapp" {
      bucket = aws_s3_bucket.webapp.id
+     depends_on = [aws_s3_bucket_policy.webapp]
      
      index_document {
        suffix = "index.html"
@@ -44,5 +46,6 @@ provider "aws" {
      key          = "index.html"
      source       = "../src/index.html"
      content_type = "text/html"
+     depends_on   = [aws_s3_bucket_website_configuration.webapp]
    }
 
