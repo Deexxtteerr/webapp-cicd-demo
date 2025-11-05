@@ -17,10 +17,16 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                dir('terraform') {
-                    sh 'terraform init'
-                    sh 'terraform plan'
-                    sh 'terraform apply -auto-approve'
+                withCredentials([
+                    string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')
+                ]) {
+                    dir('terraform') {
+                        sh 'export AWS_DEFAULT_REGION=us-west-1'
+                        sh 'terraform init'
+                        sh 'terraform plan'
+                        sh 'terraform apply -auto-approve'
+                    }
                 }
             }
         }
