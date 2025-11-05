@@ -5,6 +5,6 @@ variable "aws_region" {
 
 variable "bucket_name" {
   description = "S3 bucket name"
-  default     = "webapp-demo-bucket-Nilesh"
+  default     = "webapp-demo-bucket-nilesh"
 }
 
